@@ -15,24 +15,30 @@ enum Token {
 }
 
 struct Lexer {
+    pos: u32,
+    token: Token,
+    text: String,
 }
-
+impl Lexer {
+    fn new() -> Lexer {
+        Lexer {
+            pos: 0,
+            token: Token::BOF,
+            text: String::from(""),
+        }
+    }
+    fn scan(self) {}
+}
 
 fn lex(code: String) -> Lexer {
-    Lexer {}
-
+    Lexer::new()
 }
 
-fn bind(tree: &Lexer) {
+fn bind(tree: &Lexer) {}
 
-}
+fn check(tree: &Lexer) {}
 
-fn check(tree: &Lexer) {
-
-}
-
-fn emit(tree: &Lexer) {
-}
+fn emit(tree: &Lexer) {}
 
 fn transform(tree: &Lexer) -> &Lexer {
     tree
