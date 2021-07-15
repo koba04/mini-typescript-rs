@@ -69,11 +69,12 @@ impl Lexer {
         while self.pos < self.original_text.len() {
             if let Some(c) = &self.original_text.chars().nth(self.pos) {
                 if regex.is_match(&c.to_string()) {
+                    println!("match, {}", c);
                     self.pos += 1;
-                    continue;
+                } else {
+                    break;
                 }
             }
-            break;
         }
     }
 }
@@ -82,18 +83,28 @@ fn lex(code: String) -> Lexer {
     Lexer::new(code)
 }
 
-fn bind(tree: &Lexer) {}
+struct Symbol {
+}
 
-fn check(tree: &Lexer) {}
+struct Module {
+}
 
-fn emit(tree: &Lexer) {}
+fn parse(lex: Lexer) -> Module {
+    Module {}
+}
 
-fn transform(tree: &Lexer) -> &Lexer {
+fn bind(tree: &Module) {}
+
+fn check(tree: &Module) {}
+
+fn emit(tree: &Module) {}
+
+fn transform(tree: &Module) -> &Module {
     tree
 }
 
 pub fn compile(code: String) {
-    let tree = lex(code);
+    let tree = parse(lex(code));
     bind(&tree);
     check(&tree);
     emit(transform(&tree))
@@ -103,18 +114,13 @@ pub fn compile(code: String) {
 mod tests {
     use super::*;
     #[test]
-    fn it_works() {
-        compile(String::from("var num: number = 1"));
-        assert_eq!(2 + 2, 4);
-    }
-    #[test]
     fn scan_forward() {
         let mut lex = Lexer::new(String::from("var a = 1"));
         lex.scan();
-        assert_eq!(lex.pos, 0);
+        assert_eq!(lex.pos, 1);
 
         let mut lex = Lexer::new(String::from("  var a = 1"));
         lex.scan();
-        assert_eq!(lex.pos, 2);
+        assert_eq!(lex.pos, 3);
     }
 }
